@@ -1,0 +1,70 @@
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Заявка №:{{ bid.id }}</h1>
+  <p><strong>Тип:</strong>
+        <!--('h', 'hard')
+        ('c', 'cartridge')
+        ('pr', 'printer')
+        ('w', 'web or net')
+        ('t', 'telephone')
+        ('v', 'viruses')
+        ('s', 'soft')
+        ('pa', 'Parus')-->
+      {{ bid.get_type_bid_display }}
+      {% if bid.type_bid == "h" %}{% load django_bootstrap_icons %}<i class="bi bi-tools"></i>
+      {% endif %}
+
+      {% if bid.type_bid == "c" %}{% load django_bootstrap_icons %}{% bs_icon 'palette' %}
+      {% endif %}
+
+      {% if bid.type_bid == "pr" %}{% load django_bootstrap_icons %}{% bs_icon 'printer' %}
+      {% endif %}
+
+      {% if bid.type_bid == "w" %}{% load django_bootstrap_icons %}{% bs_icon 'globe' %}
+      {% endif %}
+
+      {% if bid.type_bid == "t" %}{% load django_bootstrap_icons %}<i class="bi bi-telephone-inbound-fill"></i>
+      {% endif %}
+
+      {% if bid.type_bid == "v" %}{% load django_bootstrap_icons %}<i class="bi bi-exclamation-triangle"></i>
+      {% endif %}
+
+      {% if bid.type_bid == "s" %}{% load django_bootstrap_icons %}{% bs_icon 'alarm' %}
+      {% endif %}
+
+      {% if bid.type_bid == "pa" %}{% load django_bootstrap_icons %}{% bs_icon 'alarm' %}
+      {% endif %}
+
+  </p>
+  <p><strong>Текст заявки:</strong> {{ bid.text }}</p>
+  <p><strong>Место:</strong> {{ bid.location }}</p>
+  <p><strong>Номер телефона:</strong> {{ bid.telephone_num }}</p>
+  <p><strong>Заявитель:</strong> {{ bid.bider }}</p>
+  <p><strong>Исполнитель:</strong> {{ bid.maker }}</p>
+  <p><strong>Ассистент:</strong> {{ bid.helper }}</p>
+  <p><strong>Дата создания:</strong> {{ bid.time_creation }}</p>
+  <p><strong>Дата начала работы:</strong> {{ bid.time_start }}</p>
+  <p><strong>Дата завершения:</strong> {{ bid.time_done }}</p>
+  <p><strong>Статус:</strong>
+  {% if bid.status == "a" %}<span class="badge badge-primary">Принята</span>
+           {% endif %}
+
+           {% if bid.status == "w" %}<span class="badge badge-danger">В работе</span>
+           {% endif %}
+
+           {% if bid.status == "f" %}<span class="badge badge-success">Выполнено</span>
+           {% endif %}
+  </p>
+  <p><strong>Комментарий:</strong> {{ bid.comment }}</p>
+  <p><strong>Результат:</strong> {{ bid.result }}</p>
+
+  <!--
+  <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+   -->
+<div class="submit-row">
+  <input type="button" value="Редактировать заявку" onClick="location.href='{% url "bid-update" bid.pk %}'">
+  <input type="button" value="Удалить заявку" onClick="location.href='{% url "bid-delete" bid.pk %}'">
+</div>
+{% endblock %}

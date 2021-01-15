@@ -1,0 +1,44 @@
+{% extends "base_generic.html" %}
+
+
+{% block content %}
+    <h1>Мои заявки</h1>
+
+    {% if bid_list %}
+
+<table class="table table-striped">
+   <tr><th>Номер заявки</th>
+       <th>Тип</th>
+       <th>Содержание</th>
+       <th>Заявитель</th>
+       <th>Исполнитель</th>
+       <th>Дата создания</th>
+       <th>Состояние</th>
+   </tr>
+    {% for bid in bid_list %}
+   <tr>
+       <td><a href="{{ bid.get_absolute_url }}">{{ bid.id }}</a></td>
+       <td>{{ bid.get_type_bid_display }}</td>
+       <td>{{ bid.text }}</td>
+       <td>{{ bid.bider }}</td>
+       <td>{{ bid.maker }}</td>
+       <td>{{ bid.time_creation }}</td>
+       <td>
+           {% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
+           {% endif %}
+
+           {% if bid.status == "w" %}<span class="badge bg-danger">В работе</span>
+           {% endif %}
+
+           {% if bid.status == "f" %}<span class="badge bg-success">Выполнено</span>
+           {% endif %}
+
+       </td>
+   </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+      <p>There are no bids for you.</p>
+{% endif %}
+{% endblock %}

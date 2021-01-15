@@ -1,0 +1,58 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+
+<script language="javascript" type="text/javascript">
+var d = new Date();
+
+var day=new Array("Воскресенье","Понедельник","Вторник",
+"Среда","Четверг","Пятница","Суббота");
+
+var month=new Array("января","февраля","марта","апреля","мая","июня",
+"июля","августа","сентября","октября","ноября","декабря");
+
+document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
++ " " + d.getFullYear() + " г.");
+</script>
+<div class="bd-content col-sm-4">
+
+<h3>Состояние работ:</h3>
+
+<!--  <p>The state of work:</p>-->
+  <ul>
+    <li><strong>Заявок всего:</strong> {{ num_bids }}</li>
+    <li><strong>Заявок не начато:</strong> {{ num_bids_a }}</li>
+    <li><strong>Заявок в работе:</strong> {{ num_bids_w }}</li>
+    <li><strong>Заявок завершено:</strong> {{ num_bids_f }}</li>
+
+  </ul>
+
+</div>
+<!--<h3>Список заявок:</h3>-->
+
+{% if all_stickers %}
+<div class="row">
+{% for sticker in all_stickers %}
+
+<div class="card" style="width: 18rem;">
+
+  <div class="card-body">
+    <h5 class="card-title">Sticker # {{ sticker.id }}</h5>
+    <p class="card-text">{{ sticker }}</p>
+    <a href="{% url 'sticker-delete' sticker.pk %}" class="btn btn-primary">Delete</a>
+  </div>
+</div>
+
+{% endfor %}
+</div>
+{% else %}
+      <p>There are no stickers.</p>
+{% endif %}
+ <!--
+  <table>
+   <tr><th>Number</th><th>Text</th><th>Bider</th><th>Maker</th><th>Date of creation</th></tr>
+   <tr><td>{{ one_bid.id }}</td><td>{{ one_bid.text }}</td><td>{{ one_bid.bider }}</td><td>{{ one_bid.maker }}</td><td>{{ one_bid.time_creation }}</td></tr>
+  </table>
+-->
+{% endblock %}
