@@ -48,13 +48,13 @@
   <p><strong>Дата начала работы:</strong> {{ bid.time_start }}</p>
   <p><strong>Дата завершения:</strong> {{ bid.time_done }}</p>
   <p><strong>Статус:</strong>
-  {% if bid.status == "a" %}<span class="badge badge-primary">Принята</span>
+  {% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
            {% endif %}
 
-           {% if bid.status == "w" %}<span class="badge badge-danger">В работе</span>
+           {% if bid.status == "w" %}<span class="badge bg-danger">В работе</span>
            {% endif %}
 
-           {% if bid.status == "f" %}<span class="badge badge-success">Выполнено</span>
+           {% if bid.status == "f" %}<span class="badge bg-success">Выполнено</span>
            {% endif %}
   </p>
   <p><strong>Комментарий:</strong> {{ bid.comment }}</p>
@@ -65,6 +65,8 @@
    -->
 <div class="submit-row">
   <input type="button" value="Редактировать заявку" onClick="location.href='{% url "bid-update" bid.pk %}'">
+    {% if perms.system.delete_bid %}
   <input type="button" value="Удалить заявку" onClick="location.href='{% url "bid-delete" bid.pk %}'">
+    {% endif %}
 </div>
 {% endblock %}

@@ -76,7 +76,8 @@ class MakingBidsByUserListView(LoginRequiredMixin,generic.ListView):
 class BidDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Bid
     success_url = reverse_lazy('bids')
-    permission_required = 'system.can_mark_returned'
+
+    permission_required = ('system.can_mark_returned', 'system.delete_bid')
 
 
 
@@ -84,7 +85,6 @@ from system.forms import CreateBidForm
 
 
 @login_required
-@permission_required('system.can_mark_returned', raise_exception=True)
 def bid_create(request):
     """View function for renewing a specific BookInstance by librarian."""
     # book_instance = get_object_or_404(BookInstance, pk=pk)
@@ -145,7 +145,6 @@ def bid_create(request):
 
 
 @login_required
-@permission_required('system.can_mark_returned', raise_exception=True)
 def bid_update(request, pk):
     """View function for renewing a specific BookInstance by librarian."""
     bid = get_object_or_404(Bid, pk=pk)
@@ -209,7 +208,6 @@ from system.forms import CreateStickerForm
 
 
 @login_required
-@permission_required('system.can_mark_returned', raise_exception=True)
 def sticker_create(request):
     """View function for renewing a specific BookInstance by librarian."""
     # book_instance = get_object_or_404(BookInstance, pk=pk)
@@ -247,7 +245,7 @@ def sticker_create(request):
     return render(request, 'system/sticker_create.html', context)
 
 
-class StickerDelete(LoginRequiredMixin, DeleteView):
+class StickerDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Sticker
     success_url = reverse_lazy('index')
-    permission_required = 'system.can_mark_returned'
+    permission_required = ('system.can_mark_returned', 'system.delete_sticker')
