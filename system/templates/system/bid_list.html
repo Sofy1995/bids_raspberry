@@ -6,9 +6,10 @@
 
     {% if bid_list %}
 
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for bid.." title="Type in a name">
 
-<table class="table table-striped">
-   <tr><th>Номер заявки</th>
+<table class="table table-striped" id="myTable">
+   <tr class="header"><th>Номер заявки</th>
        <th>Тип</th>
        <th>Содержание</th>
        <th>Заявитель</th>
@@ -43,4 +44,26 @@
     {% else %}
       <p>Заявок нет.</p>
     {% endif %}
+
+
+<script language="javascript" type="text/javascript">
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
 {% endblock %}
+

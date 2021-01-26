@@ -16,5 +16,6 @@ urlpatterns += [
     path('bid/<int:pk>/delete/', views.BidDelete.as_view(), name='bid-delete'),
     path('sticker/', views.sticker_create, name='sticker-create'),
     path('sticker/delete<int:pk>', views.StickerDelete.as_view(), name='sticker-delete'),
+    path('bid/search/', views.bid_search, name='bid-search'),
     # path('bid/<int:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
 ]

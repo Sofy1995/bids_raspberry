@@ -9,7 +9,7 @@ from django import forms
 class CreateBidForm(forms.Form):
     """Form for a librarian to renew books.
     fields = ['text', 'type_bid', 'location', 'telephone_num', 'bider', 'maker', 'helper']"""
-    text = forms.CharField(max_length=1000, help_text="Enter a brief description of the bid")
+    text = forms.CharField(max_length=1000, widget=forms.Textarea)
 
     TYPE_OF_BID = (
         ('h', 'hard'),
@@ -80,10 +80,15 @@ class CreateBidForm(forms.Form):
 class CreateStickerForm(forms.Form):
     """Form for a librarian to renew books.
     fields = ['text', 'type_bid', 'location', 'telephone_num', 'bider', 'maker', 'helper']"""
-    text = forms.CharField(initial='', required=False)
+    text = forms.CharField(initial='', required=False, widget=forms.Textarea)
 
     def clean_text(self):
         data = self.cleaned_data['text']
         if data == "":
             raise ValidationError(_('Type something'))
         return data
+
+
+class SearchForm(forms.Form):
+    query = forms.IntegerField()
+    # query = forms.CharField()

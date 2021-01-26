@@ -11,6 +11,7 @@ from django.urls import reverse
 import datetime
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.postgres.search import SearchVector
 # Create your views here.
 
 def index(request):
@@ -133,7 +134,7 @@ def bid_create(request):
 
     # If this is a GET (or any other method) create the default form
     else:
-        proposed_text = "Some text"
+        proposed_text = " "
         form = CreateBidForm(initial={'text': proposed_text})
 
     context = {
@@ -249,3 +250,22 @@ class StickerDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Sticker
     success_url = reverse_lazy('index')
     permission_required = ('system.can_mark_returned', 'system.delete_sticker')
+
+
+from system.forms import SearchForm
+
+
+def bid_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Bid.objects.all().filter(id=query).order_by('-time_creation')
+    return render(request,
+                  'system/search.html',
+                  {'form': form,
+                   'query': query,
+                   'results': results})
