@@ -3,21 +3,21 @@
 
 {% block content %}
   {% if query %}
-    <h1>Bid containing "{{ query }}"</h1>
+    <h1>Заявок, содержащих "{{ query }}"</h1>
     <h3>
       {% with results.count as total_results %}
-	Found {{ total_results }} result{{ total_results|pluralize }}
+	Найдено {{ total_results }} результатов{{ total_results|pluralize }}
       {% endwith %}
     </h3>
     {% for bid in results %}
       <h4><a href="{{ bid.get_absolute_url }}">{{ bid.id }}</a></h4>
       {{ bid.text|truncatewords:5 }}
     {% empty %}
-      <p>There are no results for your query.</p>
+      <p>Заявок с таким номером нет.</p>
     {% endfor %}
-    <p><a href="{% url "bid-search" %}">Search again</a></p>
+    <p><a href="{% url "bid-search" %}">Новый поиск</a></p>
   {% else %}
-    <h1>Search for bid</h1>
+    <h1>Поиск заявок</h1>
     <form action="." method="get">
       {{ form.as_p }}
       <input type="submit" value="Search">

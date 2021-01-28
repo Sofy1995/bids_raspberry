@@ -12,9 +12,13 @@
    <tr class="header"><th>Номер заявки</th>
        <th>Тип</th>
        <th>Содержание</th>
+       <th>Место</th>
+       <th>Телефон</th>
        <th>Заявитель</th>
        <th>Исполнитель</th>
-       <th>Дата создания</th>
+       <th>Время поступления</th>
+       <th>Начало работы</th>
+       <th>Завершение работы</th>
        <th>Состояние</th>
    </tr>
     {% for bid in bid_list %}
@@ -22,9 +26,13 @@
        <td><a href="{{ bid.get_absolute_url }}">{{ bid.id }}</a></td>
        <td>{{ bid.get_type_bid_display }}</td>
        <td>{{ bid.text }}</td>
+       <td>{{ bid.location }}</td>
+       <td>{{ bid.telephone_num }}</td>
        <td>{{ bid.bider }}</td>
        <td>{{ bid.maker }}</td>
        <td>{{ bid.time_creation }}</td>
+       <td>{{ bid.time_start }}</td>
+       <td>{{ bid.time_done }}</td>
        <td>
            {% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
            {% endif %}
@@ -54,7 +62,7 @@ function myFunction() {
   table = document.getElementById("myTable");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
+    td = tr[i].getElementsByTagName("td")[2];
     if (td) {
       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";

@@ -38,16 +38,16 @@
       {% endif %}
 
   </p>
-  <p><strong>Текст заявки:</strong> {{ bid.text }}</p>
+  <p><strong>Содержание:</strong> {{ bid.text }}</p>
   <p><strong>Место:</strong> {{ bid.location }}</p>
   <p><strong>Номер телефона:</strong> {{ bid.telephone_num }}</p>
   <p><strong>Заявитель:</strong> {{ bid.bider }}</p>
   <p><strong>Исполнитель:</strong> {{ bid.maker }}</p>
   <p><strong>Ассистент:</strong> {{ bid.helper }}</p>
-  <p><strong>Дата создания:</strong> {{ bid.time_creation }}</p>
-  <p><strong>Дата начала работы:</strong> {{ bid.time_start }}</p>
-  <p><strong>Дата завершения:</strong> {{ bid.time_done }}</p>
-  <p><strong>Статус:</strong>
+  <p><strong>Время поступления:</strong> {{ bid.time_creation }}</p>
+  <p><strong>Начало работы:</strong> {{ bid.time_start }}</p>
+  <p><strong>Завершение работы:</strong> {{ bid.time_done }}</p>
+  <p><strong>Состояние:</strong>
   {% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
            {% endif %}
 

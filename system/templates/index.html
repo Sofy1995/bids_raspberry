@@ -38,9 +38,11 @@ document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
 <div class="card" style="width: 18rem;">
 
   <div class="card-body">
-    <h5 class="card-title">Sticker # {{ sticker.id }}</h5>
+    <h5 class="card-title">Стикер # {{ sticker.id }}</h5>
     <p class="card-text">{{ sticker }}</p>
-    <a href="{% url 'sticker-delete' sticker.pk %}" class="btn btn-primary">Delete</a>
+    {% if perms.system.delete_sticker %}
+    <a href="{% url 'sticker-delete' sticker.pk %}" class="btn btn-primary">Удалить</a>
+    {% endif %}
   </div>
 </div>
 
