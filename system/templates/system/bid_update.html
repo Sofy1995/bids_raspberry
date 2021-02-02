@@ -4,7 +4,8 @@
     <!-- <h1>Renew: {{book_instance.book.title}}</h1>
     <p>Borrower: {{book_instance.borrower}}</p>
     <p{% if book_instance.is_overdue %} class="text-danger"{% endif %}>Due date: {{book_instance.due_back}}</p>
-    -->
+    --><div class="center-block col-sm-4">
+<h1>Заявка №:{{ bid.id }}</h1>
     <form action="" method="post">
         {% csrf_token %}
         <table class="table">
@@ -12,6 +13,10 @@
         </table>
         <input type="submit" value="Сохранить" />
         <input type="reset" value="Очистить" />
-        <a class="btn btn-primary" href="{{ bid.get_absolute_url }}" role="button">Детали</a>
+<!--        <input type="button" value="Детали" onClick="location.href='{% url "bid-detail" bid.pk %}'">-->
+
     </form>
+<input type="button" value="Детали" onClick="location.href='{% url "bid-detail" bid.pk %}'">
+
+</div>
 {% endblock %}

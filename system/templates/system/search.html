@@ -3,24 +3,28 @@
 
 {% block content %}
   {% if query %}
-    <h1>Заявок, содержащих "{{ query }}"</h1>
-    <h3>
-      {% with results.count as total_results %}
-	Найдено {{ total_results }} результатов{{ total_results|pluralize }}
-      {% endwith %}
-    </h3>
+
     {% for bid in results %}
-      <h4><a href="{{ bid.get_absolute_url }}">{{ bid.id }}</a></h4>
-      {{ bid.text|truncatewords:5 }}
+<div class="card" style="width: 18rem;">
+
+  <div class="card-body">
+    <h5 class="card-title">Заявка # {{ bid.id }}</h5>
+    <p class="card-text">{{ bid.text }}</p>
+    <h4><a href="{{ bid.get_absolute_url }}" class="btn btn-primary">Перейти к заявке</a></h4>
+  </div>
+</div>
+
+
     {% empty %}
       <p>Заявок с таким номером нет.</p>
     {% endfor %}
-    <p><a href="{% url "bid-search" %}">Новый поиск</a></p>
+
+    <input type="button" value="Новый поиск" onClick="location.href='{% url "bid-search" %}'">
   {% else %}
     <h1>Поиск заявок</h1>
     <form action="." method="get">
       {{ form.as_p }}
-      <input type="submit" value="Search">
+      <input type="submit" value="Поиск">
     </form>
   {% endif %}
 {% endblock %}

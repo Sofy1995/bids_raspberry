@@ -44,9 +44,9 @@
   <p><strong>Заявитель:</strong> {{ bid.bider }}</p>
   <p><strong>Исполнитель:</strong> {{ bid.maker }}</p>
   <p><strong>Ассистент:</strong> {{ bid.helper }}</p>
-  <p><strong>Время поступления:</strong> {{ bid.time_creation }}</p>
-  <p><strong>Начало работы:</strong> {{ bid.time_start }}</p>
-  <p><strong>Завершение работы:</strong> {{ bid.time_done }}</p>
+  <p><strong>Время поступления:</strong> {{ bid.time_creation|date:" d.m.Y  H:m l " }}</p>
+  <p><strong>Начало работы:</strong> {{ bid.time_start|date:"d.m.Y H:m l" }}</p>
+  <p><strong>Завершение работы:</strong> {{ bid.time_done|date:"d.m.Y  H:m  l" }}</p>
   <p><strong>Состояние:</strong>
   {% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
            {% endif %}
@@ -60,9 +60,7 @@
   <p><strong>Комментарий:</strong> {{ bid.comment }}</p>
   <p><strong>Результат:</strong> {{ bid.result }}</p>
 
-  <!--
-  <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-   -->
+
 <div class="submit-row">
   <input type="button" value="Редактировать заявку" onClick="location.href='{% url "bid-update" bid.pk %}'">
     {% if perms.system.delete_bid %}

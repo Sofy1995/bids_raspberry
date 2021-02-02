@@ -1,0 +1,76 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Список заявок</h1>
+
+
+    {% if bid_list %}
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for bid.." title="Type in a name">
+
+<table class="table table-striped" id="myTable">
+   <tr class="header"><th>Номер заявки</th>
+       <th>Тип</th>
+       <th>Содержание</th>
+       <th>Место</th>
+       <th>Телефон</th>
+       <th>Заявитель</th>
+       <th>Исполнитель</th>
+       <th>Время поступления</th>
+       <th>Начало работы</th>
+       <th>Завершение работы</th>
+       <th>Состояние</th>
+   </tr>
+    {% for bid in bid_list %}
+   <tr>
+       <td><a href="{{ bid.get_absolute_url }}">{{ bid.id }}</a></td>
+       <td>{{ bid.get_type_bid_display }}</td>
+       <td>{{ bid.text }}</td>
+       <td>{{ bid.location }}</td>
+       <td>{{ bid.telephone_num }}</td>
+       <td>{{ bid.bider }}</td>
+       <td>{{ bid.maker }}</td>
+       <td>{{ bid.time_creation|date:"d.m.Y H:m" }}</td>
+       <td>{{ bid.time_start|date:"d.m.Y H:m" }}</td>
+       <td>{{ bid.time_done|date:"d.m.Y H:m" }}</td>
+       <td>
+           {% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
+           {% endif %}
+
+           {% if bid.status == "w" %}<span class="badge bg-danger">В работе</span>
+           {% endif %}
+
+           {% if bid.status == "f" %}<span class="badge bg-success">Выполнено</span>
+           {% endif %}
+
+       </td>
+   </tr>
+    {% endfor %}
+</table>
+
+
+    {% else %}
+      <p>Заявок нет.</p>
+    {% endif %}
+
+
+<script language="javascript" type="text/javascript">
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+{% endblock %}

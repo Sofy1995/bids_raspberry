@@ -17,5 +17,6 @@ urlpatterns += [
     path('sticker/', views.sticker_create, name='sticker-create'),
     path('sticker/delete<int:pk>', views.StickerDelete.as_view(), name='sticker-delete'),
     path('bid/search/', views.bid_search, name='bid-search'),
+    path('bid/archive/', views.BidArchiveView.as_view(), name='bid-archive'),
     # path('bid/<int:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
 ]

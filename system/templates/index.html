@@ -15,7 +15,7 @@ var month=new Array("января","февраля","марта","апреля",
 document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
 + " " + d.getFullYear() + " г.");
 </script>
-<div class="bd-content col-sm-4">
+<div class="bd-content col-sm-4 my-md-4">
 
 <h3>Состояние работ:</h3>
 
@@ -32,9 +32,9 @@ document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
 <!--<h3>Список заявок:</h3>-->
 
 {% if all_stickers %}
-<div class="row">
+<div class="row row-cols-1 row-cols-md-3 g-4">
 {% for sticker in all_stickers %}
-
+<div class="col-sm-3">
 <div class="card" style="width: 18rem;">
 
   <div class="card-body">
@@ -45,11 +45,11 @@ document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
     {% endif %}
   </div>
 </div>
-
+</div>
 {% endfor %}
 </div>
 {% else %}
-      <p>There are no stickers.</p>
+      <p>Объявлений нет.</p>
 {% endif %}
  <!--
   <table>
@@ -57,4 +57,6 @@ document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
    <tr><td>{{ one_bid.id }}</td><td>{{ one_bid.text }}</td><td>{{ one_bid.bider }}</td><td>{{ one_bid.maker }}</td><td>{{ one_bid.time_creation }}</td></tr>
   </table>
 -->
+
+
 {% endblock %}

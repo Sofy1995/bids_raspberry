@@ -34,6 +34,7 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'my-bids' %}">Мои заявки</a></li>
 
             <li class="nav-item"><a class="nav-link" href="{% url 'bid-create' %}">Новая заявка</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'bid-archive' %}">Завершенные заявки</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'sticker-create' %}">Добавить стикер</a></li>
         {% endif %}
       </ul>
@@ -54,8 +55,7 @@
 <div class="container-fluid">
 
 <div class="row">
-
-  <div class="col-sm-10 ">
+  <div class="col-sm-10 mx-auto">
   {% block content %}{% endblock %}
 
   {% block pagination %}
@@ -82,5 +82,6 @@
 </div>
 
 </div>
+
 </body>
 </html>

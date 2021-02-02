@@ -90,5 +90,5 @@ class CreateStickerForm(forms.Form):
 
 
 class SearchForm(forms.Form):
-    query = forms.IntegerField()
+    query = forms.IntegerField(label='Введите номер заявки')
     # query = forms.CharField()

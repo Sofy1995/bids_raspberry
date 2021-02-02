@@ -32,13 +32,19 @@ class BidListView(generic.ListView):
     model = Bid
     paginate_by = 10
     def get_queryset(self):
-        return Bid.objects.all().order_by('-time_creation')
+        return Bid.objects.all().exclude(status="f").order_by('-time_creation')
     # def get_queryset(self):
     #     if 'change' in self.request.GET:
     #         message = 'You searched for:'
     #     else:
     #         message = 'You submitted an empty form.'
     #     return HttpResponse(message)
+
+class BidArchiveView(generic.ListView):
+    model = Bid
+    paginate_by = 10
+    def get_queryset(self):
+        return Bid.objects.all().filter(status="f").order_by('-time_creation')
 
 
 class BidDetailView(generic.DetailView):
@@ -54,7 +60,7 @@ class MakingBidsByUserListView(LoginRequiredMixin,generic.ListView):
     #     # redirect_field_name = 'redirect_to'
 
     def get_queryset(self):
-        return Bid.objects.all().filter(maker=self.request.user).order_by('-time_creation')
+        return Bid.objects.all().exclude(status="f").filter(maker=self.request.user).order_by('-time_creation')
         # return Bid.objects.all()
 
 
@@ -112,18 +118,18 @@ def bid_create(request):
             bid.result = form.cleaned_data['result']
             bid.comment = form.cleaned_data['comment']
 
-            if bid.status == "w" and bid.time_creation == "None":
+            if bid.status == "w" and bid.time_creation is None:
                 bid.time_start = datetime.datetime.today()
                 bid.time_creation = datetime.datetime.today()
             elif bid.status == "w":
                 bid.time_start = datetime.datetime.today()
             elif bid.status == "a":
                 bid.time_creation = datetime.datetime.today()
-            elif bid.status == "f" and bid.time_creation == "None" and bid.time_start == "None":
+            elif bid.status == "f" and bid.time_creation is None and bid.time_start is None:
                 bid.time_start = datetime.datetime.today()
                 bid.time_creation = datetime.datetime.today()
                 bid.time_done = datetime.datetime.today()
-            elif bid.status == "f" and bid.time_start == "None":
+            elif bid.status == "f" and bid.time_start is None:
                 bid.time_start = datetime.datetime.today()
                 bid.time_done = datetime.datetime.today()
 

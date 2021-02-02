@@ -4,7 +4,7 @@
     <!-- <h1>Renew: {{book_instance.book.title}}</h1>
     <p>Borrower: {{book_instance.borrower}}</p>
     <p{% if book_instance.is_overdue %} class="text-danger"{% endif %}>Due date: {{book_instance.due_back}}</p>
-    -->
+    --><div class="center-block col-sm-4">
     <form action="" method="post">
         {% csrf_token %}
         <table class="table">
@@ -13,4 +13,5 @@
         <input type="submit" value="Создать" />
         <input type="reset" value="Очистить" />
     </form>
+</div>
 {% endblock %}

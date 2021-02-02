@@ -2,7 +2,7 @@ from django.db import models
 import uuid
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
+# from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 
 # Create your models here.
 class Bid(models.Model):
@@ -10,20 +10,20 @@ class Bid(models.Model):
     text = models.TextField(max_length=1000, help_text="Enter a brief description of the bid", verbose_name="Текст заявки")
 
     TYPE_OF_BID = (
-        ('h', 'hard'),
-        ('c', 'cartridge'),
-        ('pr', 'printer'),
-        ('w', 'web or net'),
-        ('t', 'telephone'),
-        ('v', 'viruses'),
-        ('s', 'soft'),
-        ('pa', 'Parus'),
+        ('h', 'железо'),
+        ('c', 'картридж'),
+        ('pr', 'принтер'),
+        ('w', 'сеть'),
+        ('t', 'телефон'),
+        ('v', 'вирусы'),
+        ('s', 'софт'),
+        ('pa', 'Парус'),
     )
 
     type_bid = models.CharField(max_length=2, choices=TYPE_OF_BID, blank=True, default='h', verbose_name="Тип заявки")
-    location = models.CharField(max_length=200, default='Location', verbose_name="Кабинет")
+    location = models.CharField(max_length=200, default='Кабинет', verbose_name="Кабинет")
     # location = models.ForeignKey('Location', on_delete=models.SET_NULL, null=True)
-    telephone_num = models.CharField(max_length=200, default='Number', verbose_name="Телефон")
+    telephone_num = models.CharField(max_length=200, default='Телефон', verbose_name="Телефон")
     # telephone_num = models.ForeignKey('Telephone', on_delete=models.SET_NULL, null=True)
     bider = models.CharField(max_length=200, default='', verbose_name="Заявитель")
     # bider = models.ForeignKey('Bider', on_delete=models.SET_NULL, null=True)
