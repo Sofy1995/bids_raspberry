@@ -30,9 +30,9 @@
        <td>{{ bid.telephone_num }}</td>
        <td>{{ bid.bider }}</td>
        <td>{{ bid.maker }}</td>
-       <td>{{ bid.time_creation|date:"d.m.Y H:m" }}</td>
-       <td>{{ bid.time_start|date:"d.m.Y H:m" }}</td>
-       <td>{{ bid.time_done|date:"d.m.Y H:m" }}</td>
+       <td>{{ bid.time_creation|date:"d.m.Y H:i" }}</td>
+       <td>{{ bid.time_start|date:"d.m.Y H:i" }}</td>
+       <td>{{ bid.time_done|date:"d.m.Y H:i" }}</td>
        <td>
            {% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
            {% endif %}

@@ -15,21 +15,48 @@ var month=new Array("января","февраля","марта","апреля",
 document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
 + " " + d.getFullYear() + " г.");
 </script>
-<div class="bd-content col-sm-4 my-md-4">
+<div class="bd-content col-sm-6 my-md-4">
+  <h3>Состояние работ:</h3>
+<div class="row">
+  <table class="table table-bordered border-info">
+  <tr>
+    <th>Исполнитель</th>
+    <th>Заявок всего</th>
+    <th>Заявок не начато</th>
+    <th>Заявок в работе</th>
+    <th>Заявок завершено</th>
+  </tr>
+  <tr>
+    <td>ИТ служба</td>
+    <td>{{ num_bids }}</td>
+    <td>{{ num_bids_a }}{% if num_bids_a != 0 %} <span class="badge rounded-pill bg-primary">!</span> {% endif %}</td>
+    <td>{{ num_bids_w }}{% if num_bids_w != 0 %} <span class="badge rounded-pill bg-danger">!</span> {% endif %}</td>
+    <td>{{ num_bids_f }}</td>
+  </tr>
+    {% if user.is_authenticated and not perms.system.delete_bid %}
+  <tr>
+    <td>{{user.get_username}}</td>
+    <td>{{ user_num_bids }}</td>
+    <td>{{ user_num_bids_a }}{% if user_num_bids_a != 0 %} <span class="badge rounded-pill bg-primary">!</span> {% endif %}</td>
+    <td>{{ user_num_bids_w }}{% if user_num_bids_w != 0 %} <span class="badge rounded-pill bg-danger">!</span> {% endif %}</td>
+    <td>{{ user_num_bids_f }}</td>
+  </tr>
+    {% endif %}
 
-<h3>Состояние работ:</h3>
-
-<!--  <p>The state of work:</p>-->
-  <ul>
-    <li><strong>Заявок всего:</strong> {{ num_bids }}</li>
-    <li><strong>Заявок не начато:</strong> {{ num_bids_a }}</li>
-    <li><strong>Заявок в работе:</strong> {{ num_bids_w }}</li>
-    <li><strong>Заявок завершено:</strong> {{ num_bids_f }}</li>
-
-  </ul>
-
+    {% if perms.system.delete_bid %}
+    {% for boy in all_users %}
+    <tr>
+    <td>{{ boy.0 }}</td>
+    <td>{{ boy.1 }}</td>
+    <td>{{ boy.2 }} {% if boy.2 != 0 %} <span class="badge rounded-pill bg-primary">!</span> {% endif %} </td>
+    <td>{{ boy.3 }}{% if boy.3 != 0 %} <span class="badge rounded-pill bg-danger">!</span> {% endif %}</td>
+    <td>{{ boy.4 }}</td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+  </table>
 </div>
-<!--<h3>Список заявок:</h3>-->
+</div>
 
 {% if all_stickers %}
 <div class="row row-cols-1 row-cols-md-3 g-4">

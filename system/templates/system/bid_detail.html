@@ -31,7 +31,7 @@
       {% if bid.type_bid == "v" %}{% load django_bootstrap_icons %}<i class="bi bi-exclamation-triangle"></i>
       {% endif %}
 
-      {% if bid.type_bid == "s" %}{% load django_bootstrap_icons %}{% bs_icon 'alarm' %}
+      {% if bid.type_bid == "s" %}{% load django_bootstrap_icons %}{% bs_icon 'bug' %}
       {% endif %}
 
       {% if bid.type_bid == "pa" %}{% load django_bootstrap_icons %}{% bs_icon 'alarm' %}
@@ -44,9 +44,9 @@
   <p><strong>Заявитель:</strong> {{ bid.bider }}</p>
   <p><strong>Исполнитель:</strong> {{ bid.maker }}</p>
   <p><strong>Ассистент:</strong> {{ bid.helper }}</p>
-  <p><strong>Время поступления:</strong> {{ bid.time_creation|date:" d.m.Y  H:m l " }}</p>
-  <p><strong>Начало работы:</strong> {{ bid.time_start|date:"d.m.Y H:m l" }}</p>
-  <p><strong>Завершение работы:</strong> {{ bid.time_done|date:"d.m.Y  H:m  l" }}</p>
+  <p><strong>Время поступления:</strong> {{ bid.time_creation|date:" d.m.Y  H:i l " }}</p>
+  <p><strong>Начало работы:</strong> {{ bid.time_start|date:"d.m.Y H:i l" }}</p>
+  <p><strong>Завершение работы:</strong> {{ bid.time_done|date:"d.m.Y  H:i  l" }}</p>
   <p><strong>Состояние:</strong>
   {% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
            {% endif %}

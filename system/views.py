@@ -11,7 +11,8 @@ from django.urls import reverse
 import datetime
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.postgres.search import SearchVector
+from django.contrib.auth.models import User
+
 # Create your views here.
 
 def index(request):
@@ -19,12 +20,57 @@ def index(request):
     num_bids_a=Bid.objects.all().filter(status='a').count()
     num_bids_w=Bid.objects.all().filter(status='w').count()
     num_bids_f=Bid.objects.all().filter(status='f').count()
+
     all_stickers = Sticker.objects.all().filter(status='v')
+
+    if request.user.is_authenticated:
+        if request.user.has_perm('system.delete_bid'):
+            all_users = list()
+            for user in User.objects.all():
+                user_num_bids_a=Bid.objects.filter(maker=user).filter(status='a').count()
+                user_num_bids_w=Bid.objects.filter(maker=user).filter(status='w').count()
+                user_num_bids_f=Bid.objects.filter(maker=user).filter(status='f').count()
+                user_num_bids=user_num_bids_a+user_num_bids_w+user_num_bids_f
+                all_users.append((user.get_username(), user_num_bids, user_num_bids_a, user_num_bids_w, user_num_bids_f,))
+
+            return render(
+                        request,
+                        'index.html',
+                        context={'num_bids': num_bids,
+                                 'num_bids_a': num_bids_a,
+                                 'num_bids_w': num_bids_w,
+                                 'num_bids_f': num_bids_f,
+                                 'all_stickers': all_stickers,
+                                 'all_users': all_users},
+    )
+
+        user_num_bids_a=Bid.objects.filter(maker=request.user).filter(status='a').count()
+        user_num_bids_w=Bid.objects.filter(maker=request.user).filter(status='w').count()
+        user_num_bids_f=Bid.objects.filter(maker=request.user).filter(status='f').count()
+        user_num_bids=user_num_bids_a+user_num_bids_w+user_num_bids_f
+
+        return render(
+                        request,
+                        'index.html',
+                        context={'num_bids': num_bids,
+                                 'num_bids_a': num_bids_a,
+                                 'num_bids_w': num_bids_w,
+                                 'num_bids_f': num_bids_f,
+                                 'all_stickers': all_stickers,
+                                 'user_num_bids': user_num_bids,
+                                 'user_num_bids_a': user_num_bids_a,
+                                 'user_num_bids_w': user_num_bids_w,
+                                 'user_num_bids_f': user_num_bids_f},
+    )
 
     return render(
         request,
         'index.html',
-        context={'num_bids': num_bids, 'num_bids_a': num_bids_a, 'num_bids_w': num_bids_w, 'num_bids_f': num_bids_f, 'all_stickers': all_stickers},
+        context={'num_bids': num_bids,
+                 'num_bids_a': num_bids_a,
+                 'num_bids_w': num_bids_w,
+                 'num_bids_f': num_bids_f,
+                 'all_stickers': all_stickers},
     )
 
 
@@ -84,7 +130,7 @@ class BidDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Bid
     success_url = reverse_lazy('bids')
 
-    permission_required = ('system.can_mark_returned', 'system.delete_bid')
+    permission_required = ('system.delete_bid')
 
 
 
@@ -255,7 +301,7 @@ def sticker_create(request):
 class StickerDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Sticker
     success_url = reverse_lazy('index')
-    permission_required = ('system.can_mark_returned', 'system.delete_sticker')
+    permission_required = ('system.delete_sticker')
 
 
 from system.forms import SearchForm

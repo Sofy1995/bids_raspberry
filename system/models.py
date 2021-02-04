@@ -2,7 +2,6 @@ from django.db import models
 import uuid
 from django.urls import reverse
 from django.contrib.auth.models import User
-# from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 
 # Create your models here.
 class Bid(models.Model):
@@ -56,16 +55,6 @@ class Bid(models.Model):
         return reverse('bid-detail', args=[str(self.id)])
 
 
-
-# class Location(models.Model):
-#     room = models.CharField(max_length=200)
-#
-#     def __str__(self):
-#         return self.room
-
-    # def get_adsolute_url(self):
-    #     return reverse('locarion-detail', args=[str(self.id)])
-
 class Sticker(models.Model):
     text = models.CharField(max_length=200, verbose_name="Текст объявления")
     date_creation = models.DateTimeField(null=True, verbose_name="Дата создания")
@@ -83,27 +72,4 @@ class Sticker(models.Model):
         verbose_name_plural = "Объявления"
         verbose_name = "Объявление"
 
-# class Bider(models.Model):
-#     surname = models.CharField(max_length=100)
-#     name = models.CharField(max_length=100)
-#     father_name = models.CharField(max_length=100)
-#
-#     def __str__(self):
-#         return self.surname + self.name[0] + self.father_name[0]
 
-
-# class Maker(models.Model):
-#     surname = models.CharField(max_length=100)
-#     name = models.CharField(max_length=100)
-#     father_name = models.CharField(max_length=100)
-#
-#     def __str__(self):
-#         return self.surname + ' ' + self.name[0] + '. ' + self.father_name[0] + '.'
-#
-# class Helper(models.Model):
-#     surname = models.CharField(max_length=100)
-#     name = models.CharField(max_length=100)
-#     father_name = models.CharField(max_length=100)
-#
-#     def __str__(self):
-#         return self.surname + ' ' + self.name[0] + '. ' + self.father_name[0] + '.'
