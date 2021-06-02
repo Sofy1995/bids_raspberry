@@ -76,7 +76,7 @@ def index(request):
 
 class BidListView(generic.ListView):
     model = Bid
-    paginate_by = 10
+    paginate_by = 25
     def get_queryset(self):
         return Bid.objects.all().exclude(status="f").order_by('-time_creation')
     # def get_queryset(self):
@@ -88,7 +88,7 @@ class BidListView(generic.ListView):
 
 class BidArchiveView(generic.ListView):
     model = Bid
-    paginate_by = 10
+    paginate_by = 25
     def get_queryset(self):
         return Bid.objects.all().filter(status="f").order_by('-time_creation')
 
@@ -101,7 +101,7 @@ class MakingBidsByUserListView(LoginRequiredMixin,generic.ListView):
     """Generic class-based view listing books on loan to current user."""
     model = Bid
     template_name ='system/bids_for_user.html'
-    paginate_by = 5
+    paginate_by = 10
     # login_url = '/login/'
     #     # redirect_field_name = 'redirect_to'
 
