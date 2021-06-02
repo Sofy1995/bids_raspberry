@@ -220,7 +220,7 @@ def bid_update(request, pk):
             bid.bider = form.cleaned_data['bider']
             bid.maker = form.cleaned_data['maker']
             bid.helper = form.cleaned_data['helper']
-            bid.status = form.cleaned_data['status']
+            # bid.status = form.cleaned_data['status']
             bid.result = form.cleaned_data['result']
             bid.comment = form.cleaned_data['comment']
             if bid.status != form.cleaned_data['status']:
