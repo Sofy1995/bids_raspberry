@@ -223,11 +223,13 @@ def bid_update(request, pk):
             bid.status = form.cleaned_data['status']
             bid.result = form.cleaned_data['result']
             bid.comment = form.cleaned_data['comment']
-            if bid.status == "w":
-                bid.time_start = datetime.datetime.today()
-            elif bid.status == "f":
+            if bid.status != form.cleaned_data['status']:
+                bid.status = form.cleaned_data['status']
+                if bid.status == "w":
+                    bid.time_start = datetime.datetime.today()
+                elif bid.status == "f":
                 # bid.time_start = datetime.datetime.today()
-                bid.time_done = datetime.datetime.today()
+                    bid.time_done = datetime.datetime.today()
             bid.save()
 
             # redirect to a new URL:

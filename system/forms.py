@@ -12,13 +12,13 @@ class CreateBidForm(forms.Form):
     text = forms.CharField(max_length=1000, widget=forms.Textarea, label='Содержание')
 
     TYPE_OF_BID = (
-        ('h', 'железо'),
-        ('c', 'картридж'),
-        ('pr', 'принтер'),
-        ('w', 'сеть'),
-        ('t', 'телефон'),
-        ('v', 'вирусы'),
-        ('s', 'софт'),
+        ('h', 'Железо'),
+        ('c', 'Картридж'),
+        ('pr', 'Принтер'),
+        ('w', 'Сеть'),
+        ('t', 'Телефон'),
+        ('v', 'Вирусы'),
+        ('s', 'Софт'),
         ('pa', 'Парус'),
     )
 
@@ -39,9 +39,9 @@ class CreateBidForm(forms.Form):
     # time_done = forms.DateTimeField()
 
     STATUS = (
-        ('a', 'принята'),
-        ('w', 'в работе'),
-        ('f', 'выполнена'),
+        ('a', 'Принята'),
+        ('w', 'В работе'),
+        ('f', 'Выполнена'),
     )
 
     status = forms.ChoiceField(choices=STATUS, initial='a', label='Состояние')
@@ -86,6 +86,8 @@ class CreateStickerForm(forms.Form):
         data = self.cleaned_data['text']
         if data == "":
             raise ValidationError(_('Напишите хоть что-нибудь'))
+        elif len(data) >= 200:
+            raise ValidationError(_('Слишком много букв'))
         return data
 
 

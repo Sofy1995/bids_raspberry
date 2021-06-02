@@ -62,11 +62,11 @@ document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
 <div class="row row-cols-1 row-cols-md-3 g-4">
 {% for sticker in all_stickers %}
 <div class="col-sm-3">
-<div class="card" style="width: 18rem;">
+<div class="card w-100">
 
   <div class="card-body">
     <h5 class="card-title">Стикер # {{ sticker.id }}</h5>
-    <p class="card-text">{{ sticker }}</p>
+    <p class="card-text"><pre style="font-size:15px;font-family:verdana;">{{ sticker }}</pre></p>
     {% if perms.system.delete_sticker %}
     <a href="{% url 'sticker-delete' sticker.pk %}" class="btn btn-primary">Удалить</a>
     {% endif %}
