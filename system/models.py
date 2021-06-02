@@ -9,13 +9,13 @@ class Bid(models.Model):
     text = models.TextField(max_length=1000, help_text="Enter a brief description of the bid", verbose_name="Текст заявки")
 
     TYPE_OF_BID = (
-        ('h', 'железо'),
-        ('c', 'картридж'),
-        ('pr', 'принтер'),
-        ('w', 'сеть'),
-        ('t', 'телефон'),
-        ('v', 'вирусы'),
-        ('s', 'софт'),
+        ('h', 'Железо'),
+        ('c', 'Картридж'),
+        ('pr', 'Принтер'),
+        ('w', 'Сеть'),
+        ('t', 'Телефон'),
+        ('v', 'Вирусы'),
+        ('s', 'Софт'),
         ('pa', 'Парус'),
     )
 
@@ -34,9 +34,9 @@ class Bid(models.Model):
     time_done = models.DateTimeField(null=True, verbose_name="Дата завершения работы")
 
     STATUS = (
-        ('a', 'принята'),
-        ('w', 'в работе'),
-        ('f', 'выполнена'),
+        ('a', 'Принята'),
+        ('w', 'В работе'),
+        ('f', 'Выполнена'),
     )
 
     status = models.CharField(max_length=1, choices=STATUS, default='a', verbose_name="Статус заявки")
