@@ -71,9 +71,12 @@ class CreateBidForm(forms.Form):
         cleaned_data = super(CreateBidForm, self).clean()
         status = cleaned_data.get("status")
         result = cleaned_data.get("result")
+        maker = cleaned_data.get("maker")
 
         if status == 'f' and result == '':
             raise ValidationError(_('Для завершения работы по заявке укажите результат работы'))
+        if status in ('w', 'f') and maker is None:
+            raise ValidationError(_('Для изменения статуса заявки укажите исполнителя'))
 
 
 
