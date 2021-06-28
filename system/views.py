@@ -159,6 +159,9 @@ def bid_create(request):
             bid.telephone_num = form.cleaned_data['telephone_num']
             bid.bider = form.cleaned_data['bider']
             bid.maker = form.cleaned_data['maker']
+
+            bid.creator = request.user.get_username()
+
             bid.helper = form.cleaned_data['helper']
             bid.status = form.cleaned_data['status']
             bid.result = form.cleaned_data['result']

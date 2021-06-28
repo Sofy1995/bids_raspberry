@@ -27,6 +27,7 @@ class Bid(models.Model):
     bider = models.CharField(max_length=200, default='', verbose_name="Заявитель")
     # bider = models.ForeignKey('Bider', on_delete=models.SET_NULL, null=True)
     maker = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name="Исполнитель")
+    creator = models.CharField(max_length=200, default='', verbose_name="Принял заявку")
     helper = models.CharField(max_length=200, null=True, verbose_name="Помощник")
     # helper = models.ManyToManyField('Helper')
     time_creation = models.DateTimeField(null=True, verbose_name="Дата создания заявки")
