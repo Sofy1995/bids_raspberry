@@ -110,21 +110,6 @@ class MakingBidsByUserListView(LoginRequiredMixin,generic.ListView):
         # return Bid.objects.all()
 
 
-# class BidCreate(LoginRequiredMixin, CreateView):
-#     model = Bid
-#     fields = ['text', 'type_bid', 'location', 'telephone_num', 'bider', 'maker', 'helper']
-#
-#     permission_required = 'system.can_mark_returned'
-#
-#
-#
-#
-# class BidUpdate(LoginRequiredMixin, UpdateView):
-#     model = Bid
-#     fields = ['text', 'type_bid', 'location', 'telephone_num', 'bider', 'maker', 'helper', 'comment', 'result', 'status']
-#     permission_required = 'system.can_mark_returned'
-
-
 
 class BidDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Bid

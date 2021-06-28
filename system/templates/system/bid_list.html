@@ -2,13 +2,12 @@
 
 {% block content %}
     <h1>Список заявок</h1>
-
-
     {% if bid_list %}
-
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Поиск по содержанию.." title="Type in a name">
+
 <p></p>
 
+<div class="table-responsive-md">
 <table class="table table-striped" id="myTable">
    <tr class="header"><th>Номер заявки</th>
        <th>Тип</th>
@@ -35,7 +34,9 @@
        <td>{{ bid.time_start|date:"d.m.Y H:i" }}</td>
        <td>{{ bid.time_done|date:"d.m.Y H:i" }}</td>
        <td>
-           {% if bid.status == "a" %}<h4><span class="badge bg-primary">Принята</span></h4>
+
+           {% if bid.status == "a" %}<h4><span class="badge bg-primary">Принята
+           <a class="btn btn-secondary btn-sm" href='{% url "bid-update" bid.pk %}' role="button"><i class="bi bi-pencil"></i></a></span></h4>
            {% endif %}
 
            {% if bid.status == "w" %}<h4><span class="badge bg-danger">В работе</span></h4>
@@ -45,11 +46,10 @@
            {% endif %}
 
        </td>
-       <td><a class="btn btn-secondary btn-sm" href='{% url "bid-update" bid.pk %}' role="button"><i class="bi bi-pencil"></i></a></td>
    </tr>
     {% endfor %}
 </table>
-
+</div>
 
     {% else %}
       <p>Заявок нет.</p>

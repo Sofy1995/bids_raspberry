@@ -1,10 +1,8 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <!-- <h1>Renew: {{book_instance.book.title}}</h1>
-    <p>Borrower: {{book_instance.borrower}}</p>
-    <p{% if book_instance.is_overdue %} class="text-danger"{% endif %}>Due date: {{book_instance.due_back}}</p>
-    --><div class="center-block col-sm-4">
+
+<div class="col-12 col-sm-9 col-md-9 col-lg-5">
 <h1>Заявка №:{{ bid.id }}</h1>
     <form action="" method="post">
         {% csrf_token %}
@@ -13,10 +11,9 @@
         </table>
         <input type="submit" value="Сохранить" />
         <input type="reset" value="Очистить" />
-<!--        <input type="button" value="Детали" onClick="location.href='{% url "bid-detail" bid.pk %}'">-->
-
     </form>
-<input type="button" value="Детали" onClick="location.href='{% url "bid-detail" bid.pk %}'">
-
+    <p></p>
+    <input type="button" value="Детали" onClick="location.href='{% url "bid-detail" bid.pk %}'">
 </div>
+
 {% endblock %}
