@@ -77,13 +77,22 @@ class CreateBidForm(forms.Form):
 
 class CreateStickerForm(forms.Form):
 
-    text = forms.CharField(initial='', required=False, widget=forms.Textarea, label='Содержание')
+    name = forms.CharField(initial='', required=False, widget=forms.TextInput(attrs={'size': 45}), label='Название')
+    text = forms.CharField(initial='', required=False, widget=forms.Textarea(attrs={'cols': 44, 'rows': 6}), label='Содержание')
+
+    def clean_name(self):
+        data = self.cleaned_data['name']
+        if data == "":
+            raise ValidationError(_('Напишите хоть что-нибудь'))
+        elif len(data) >= 100:
+            raise ValidationError(_('Слишком много букв'))
+        return data
 
     def clean_text(self):
         data = self.cleaned_data['text']
         if data == "":
             raise ValidationError(_('Напишите хоть что-нибудь'))
-        elif len(data) >= 200:
+        elif len(data) >= 500:
             raise ValidationError(_('Слишком много букв'))
         return data
 

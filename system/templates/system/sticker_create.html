@@ -1,17 +1,28 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <!-- <h1>Renew: {{book_instance.book.title}}</h1>
-    <p>Borrower: {{book_instance.borrower}}</p>
-    <p{% if book_instance.is_overdue %} class="text-danger"{% endif %}>Due date: {{book_instance.due_back}}</p>
-    --><div class="center-block col-sm-4">
+
+    <div class="col-12 col-sm-9 col-md-9 col-lg-5">
     <form action="" method="post">
         {% csrf_token %}
-        <table class="table">
-        {{ form.as_table }}
-        </table>
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper">
+            <label for="{{ form.name.id_for_label }}">Название:</label>
+            <br>
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+        <div class="fieldWrapper">
+            <label for="{{ form.text.id_for_label }}">Содержание:</label>
+            <br>
+            {{ form.text }}
+            {{ form.text.errors }}
+        </div>
+
+
         <input type="submit" value="Создать" />
         <input type="reset" value="Очистить" />
     </form>
-</div>
+    </div>
+
 {% endblock %}

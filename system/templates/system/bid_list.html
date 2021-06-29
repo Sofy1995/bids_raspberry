@@ -1,13 +1,20 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+{% if whose == 'all' %}
     <h1>Список заявок</h1>
-    {% if bid_list %}
+{% elif whose == 'user' %}
+    <h1>Мои заявки</h1>
+{% elif whose == 'past' %}
+    <h1>Завершенные заявки</h1>
+{% endif %}
+
+{% if bid_list %}
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Поиск по содержанию.." title="Type in a name">
 
 <p></p>
 
-<div class="table-responsive-md">
+<div class="table-responsive-xxl">
 <table class="table table-striped" id="myTable">
    <tr class="header"><th>Номер заявки</th>
        <th>Тип</th>
@@ -39,10 +46,12 @@
            <a class="btn btn-secondary btn-sm" href='{% url "bid-update" bid.pk %}' role="button"><i class="bi bi-pencil"></i></a></span></h4>
            {% endif %}
 
-           {% if bid.status == "w" %}<h4><span class="badge bg-danger">В работе</span></h4>
+           {% if bid.status == "w" %}<h4><span class="badge bg-danger">В работе
+           <a class="btn btn-secondary btn-sm" href='{% url "bid-update" bid.pk %}' role="button"><i class="bi bi-pencil"></i></a></span></h4>
            {% endif %}
 
-           {% if bid.status == "f" %}<h4><span class="badge bg-success">Выполнено</span></h4>
+           {% if bid.status == "f" %}<h4><span class="badge bg-success">Выполнено
+           <a class="btn btn-secondary btn-sm" href='{% url "bid-update" bid.pk %}' role="button"><i class="bi bi-pencil"></i></a></span></h4>
            {% endif %}
 
        </td>

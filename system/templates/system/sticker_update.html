@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<div class="col-12 col-sm-9 col-md-9 col-lg-5">
+<h1>Стикер №:{{ sticker.id }}</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper">
+            <label for="{{ form.name.id_for_label }}">Название:</label>
+            <br>
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+        <div class="fieldWrapper">
+            <label for="{{ form.text.id_for_label }}">Содержание:</label>
+            <br>
+            {{ form.text }}
+            {{ form.text.errors }}
+        </div>
+        <input type="submit" value="Сохранить" />
+        <input type="reset" value="Очистить" />
+    </form>
+    <p></p>
+    {% if perms.system.delete_sticker %}
+
+    <input type="button" value="Удалить" onClick="location.href='{% url "sticker-delete" sticker.pk %}'">
+    {% endif %}
+</div>
+
+{% endblock %}
