@@ -6,3 +6,5 @@ system/migrations
 venv/
 venv2/
 old_manage.py
+bidsenv/
+bids.sql.backup
