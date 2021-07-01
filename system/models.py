@@ -57,14 +57,10 @@ class Bid(models.Model):
 
 
 class Sticker(models.Model):
-    text = models.CharField(max_length=200, verbose_name="Текст объявления")
+    name = models.CharField(max_length=100, verbose_name="Название", null=True)
+    text = models.CharField(max_length=500, verbose_name="Текст объявления")
     date_creation = models.DateTimeField(null=True, verbose_name="Дата создания")
-    STATUS = (
-        ('v', 'visible'),
-        ('h', 'hidden'),
-            )
 
-    status = models.CharField(max_length=1, choices=STATUS, default='v', verbose_name="Статус")
 
     def __str__(self):
         return self.text

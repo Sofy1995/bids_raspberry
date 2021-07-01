@@ -2,8 +2,11 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Заявка №:{{ bid.id }}</h1>
-  <p><strong>Тип:</strong>
+<div class="container">
+<div class="col-12 col-sm-9 col-md-9 col-lg-5">
+   <div class="row"><h1>Заявка №:{{ bid.id }}</h1></div>
+   <div class="row">
+       <div class="col-4 bg-light p-3 border"><strong>Тип:</strong></div>
         <!--('h', 'hard')
         ('c', 'cartridge')
         ('pr', 'printer')
@@ -12,7 +15,10 @@
         ('v', 'viruses')
         ('s', 'soft')
         ('pa', 'Parus')-->
+       <div class="col-8 bg-light p-3 border">
+
       {{ bid.get_type_bid_display }}
+
       {% if bid.type_bid == "h" %}{% load django_bootstrap_icons %}<i class="bi bi-tools"></i>
       {% endif %}
 
@@ -36,36 +42,46 @@
 
       {% if bid.type_bid == "pa" %}{% load django_bootstrap_icons %}{% bs_icon 'alarm' %}
       {% endif %}
+       </div>
+  </div>
 
-  </p>
-  <p><strong>Содержание:</strong> {{ bid.text }}</p>
-  <p><strong>Место:</strong> {{ bid.location }}</p>
-  <p><strong>Номер телефона:</strong> {{ bid.telephone_num }}</p>
-  <p><strong>Заявитель:</strong> {{ bid.bider }}</p>
-  <p><strong>Заявку принял:</strong> {{ bid.creator }}</p>
-  <p><strong>Исполнитель:</strong> {{ bid.maker }}</p>
-  <p><strong>Ассистент:</strong> {{ bid.helper }}</p>
-  <p><strong>Время поступления:</strong> {{ bid.time_creation|date:" d.m.Y  H:i l " }}</p>
-  <p><strong>Начало работы:</strong> {{ bid.time_start|date:"d.m.Y H:i l" }}</p>
-  <p><strong>Завершение работы:</strong> {{ bid.time_done|date:"d.m.Y  H:i  l" }}</p>
-  <p><strong>Состояние:</strong>
-  {% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
+  <div class="row"><div class="col-4 bg-light p-3 border"><strong>Содержание:</strong></div> <div class="col-8 bg-light p-3 border">{{ bid.text|safe|linebreaks }}</div></div>
+  <div class="row"><div class="col-4 bg-light p-3 border"><strong>Место:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.location }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Номер телефона:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.telephone_num }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Заявитель:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.bider }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Заявку принял:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.creator }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Исполнитель:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.maker }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Ассистент:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.helper }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Время поступления:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.time_creation|date:" d.m.Y  H:i l " }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Начало работы:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.time_start|date:"d.m.Y H:i l" }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Завершение работы:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.time_done|date:"d.m.Y  H:i  l" }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Состояние:</strong></div><div class="col-8 bg-light p-2 border">
+  <h4>{% if bid.status == "a" %}<span class="badge bg-primary">Принята</span>
            {% endif %}
 
            {% if bid.status == "w" %}<span class="badge bg-danger">В работе</span>
            {% endif %}
 
            {% if bid.status == "f" %}<span class="badge bg-success">Выполнено</span>
-           {% endif %}
-  </p>
-  <p><strong>Комментарий:</strong> {{ bid.comment }}</p>
-  <p><strong>Результат:</strong> {{ bid.result }}</p>
+      {% endif %}</h4>
+    </div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Комментарий:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.comment }}</div></div>
+    <div class="row"><div class="col-4 bg-light p-3 border"><strong>Результат:</strong></div><div class="col-8 bg-light p-3 border"> {{ bid.result }}</div></div>
+
+<div class="row">
 
 
-<div class="submit-row">
-  <input type="button" value="Редактировать заявку" onClick="location.href='{% url "bid-update" bid.pk %}'">
+<p></p>
+        <input type="button" value="Редактировать заявку" onClick="location.href='{% url "bid-update" bid.pk %}'">
+
     {% if perms.system.delete_bid %}
-  <input type="button" value="Удалить заявку" onClick="location.href='{% url "bid-delete" bid.pk %}'">
+
+         <input type="button" value="Удалить заявку" onClick="location.href='{% url "bid-delete" bid.pk %}'">
+
+
     {% endif %}
+
+</div>
+</div>
 </div>
 {% endblock %}
