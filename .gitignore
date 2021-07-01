@@ -1,0 +1,8 @@
+.idea/
+bids/__pycache__/
+db.sqlite3
+system/__pycache__/
+system/migrations
+venv/
+venv2/
+old_manage.py
