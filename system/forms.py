@@ -20,6 +20,7 @@ class CreateBidForm(forms.Form):
         ('v', 'Вирусы'),
         ('s', 'Софт'),
         ('pa', 'Парус'),
+        ('br', 'Бюрократия'),
     )
 
     boys = User.objects.all()

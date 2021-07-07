@@ -17,6 +17,7 @@ class Bid(models.Model):
         ('v', 'Вирусы'),
         ('s', 'Софт'),
         ('pa', 'Парус'),
+        ('br', 'Бюрократия'),
     )
 
     type_bid = models.CharField(max_length=2, choices=TYPE_OF_BID, blank=True, default='h', verbose_name="Тип заявки")
