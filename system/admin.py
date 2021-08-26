@@ -4,7 +4,4 @@ from .models import Bid, Sticker
 
 admin.site.register(Bid)
 admin.site.register(Sticker)
-# admin.site.register(Telephone)
-# admin.site.register(Bider)
-# admin.site.register(Maker)
-# admin.site.register(Helper)
+

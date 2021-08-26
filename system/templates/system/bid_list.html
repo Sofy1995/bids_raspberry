@@ -1,19 +1,30 @@
 {% extends "base_generic.html" %}
+{% load bootstrap %}
 
 {% block content %}
 {% if whose == 'all' %}
     <h1>Список заявок</h1>
+
 {% elif whose == 'user' %}
     <h1>Мои заявки</h1>
+
 {% elif whose == 'past' %}
     <h1>Завершенные заявки</h1>
 {% endif %}
 
-{% if bid_list %}
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Поиск по содержанию.." title="Type in a name">
+<form method="get">
+{{ filter.form }}
+<!--    <script>-->
+<!--    $(function () {-->
+<!--      $("id_dtoriginal_0").datepicker();-->
+<!--      $("id_dtoriginal_1").datepicker();-->
+<!--    });-->
+<!--  </script>-->
+<button type="submit" class="btn btn-primary">Search</button>
+</form>
 
+{% if filter.qs %}
 <p></p>
-
 <div class="table-responsive-xxl">
 <table class="table table-striped table-bordered" id="myTable">
    <tr class="header"><th>Номер заявки</th>
@@ -28,7 +39,7 @@
        <th>Завершение работы</th>
        <th>Состояние</th>
    </tr>
-    {% for bid in bid_list %}
+    {% for bid in filter.qs %}
    <tr>
        <td><a href="{{ bid.get_absolute_url }}">{{ bid.id }}</a></td>
        <td>{{ bid.get_type_bid_display }}</td>
@@ -64,25 +75,5 @@
       <p>Заявок нет.</p>
     {% endif %}
 
-
-<script language="javascript" type="text/javascript">
-function myFunction() {
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[2];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-}
-</script>
 {% endblock %}
 

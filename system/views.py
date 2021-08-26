@@ -12,6 +12,9 @@ import datetime
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User
+from .filters import BidFilter
+from django_filters import rest_framework as filters
+
 
 # Create your views here.
 
@@ -77,21 +80,31 @@ def index(request):
 class BidListView(generic.ListView):
     model = Bid
     paginate_by = 25
-    def get_queryset(self):
-        return Bid.objects.all().exclude(status="f").order_by('-time_creation')
+    queryset = Bid.objects.all().exclude(status="f").order_by('-time_creation')
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = BidFilter
     # def get_queryset(self):
-    #     if 'change' in self.request.GET:
-    #         message = 'You searched for:'
-    #     else:
-    #         message = 'You submitted an empty form.'
-    #     return HttpResponse(message)
+    #     return Bid.objects.all().exclude(status="f").order_by('-time_creation')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = BidFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+
 
 class BidArchiveView(generic.ListView):
+    queryset = Bid.objects.all().filter(status="f").order_by('-time_creation')
+
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = BidFilter
     model = Bid
     template_name = 'system/bids_list.html'
     paginate_by = 25
-    def get_queryset(self):
-        return Bid.objects.all().filter(status="f").order_by('-time_creation')
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = BidFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class BidDetailView(generic.DetailView):
