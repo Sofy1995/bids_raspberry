@@ -1,14 +1,21 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+{% if whose == 'all' %}
     <h1>Список заявок</h1>
+{% elif whose == 'user' %}
+    <h1>Мои заявки</h1>
+{% elif whose == 'past' %}
+    <h1>Завершенные заявки</h1>
+{% endif %}
 
-
-    {% if bid_list %}
-
+{% if bid_list %}
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Поиск по содержанию.." title="Type in a name">
+
 <p></p>
-<table class="table table-striped" id="myTable">
+
+<div class="table-responsive-xxl">
+<table class="table table-striped table-bordered" id="myTable">
    <tr class="header"><th>Номер заявки</th>
        <th>Тип</th>
        <th>Содержание</th>
@@ -34,21 +41,24 @@
        <td>{{ bid.time_start|date:"d.m.Y H:i" }}</td>
        <td>{{ bid.time_done|date:"d.m.Y H:i" }}</td>
        <td>
-           {% if bid.status == "a" %}<h4><span class="badge bg-primary">Принята</span></h4>
+
+           {% if bid.status == "a" %}<h4><span class="badge bg-primary">Принята
+           <a class="btn btn-secondary btn-sm" href='{% url "bid-update" bid.pk %}' role="button"><i class="bi bi-pencil"></i></a></span></h4>
            {% endif %}
 
-           {% if bid.status == "w" %}<h4><span class="badge bg-danger">В работе</span></h4>
+           {% if bid.status == "w" %}<h4><span class="badge bg-danger">В работе
+           <a class="btn btn-secondary btn-sm" href='{% url "bid-update" bid.pk %}' role="button"><i class="bi bi-pencil"></i></a></span></h4>
            {% endif %}
 
-           {% if bid.status == "f" %}<h4><span class="badge bg-success">Выполнено</span></h4>
+           {% if bid.status == "f" %}<h4><span class="badge bg-success">Выполнено
+           <a class="btn btn-secondary btn-sm" href='{% url "bid-update" bid.pk %}' role="button"><i class="bi bi-pencil"></i></a></span></h4>
            {% endif %}
 
        </td>
-       <td><a class="btn btn-secondary btn-sm" href='{% url "bid-update" bid.pk %}' role="button"><i class="bi bi-pencil"></i></a></td>
    </tr>
     {% endfor %}
 </table>
-
+</div>
 
     {% else %}
       <p>Заявок нет.</p>
@@ -75,4 +85,3 @@ function myFunction() {
 }
 </script>
 {% endblock %}
-

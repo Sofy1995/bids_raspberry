@@ -21,7 +21,7 @@ def index(request):
     num_bids_w=Bid.objects.all().filter(status='w').count()
     num_bids_f=Bid.objects.all().filter(status='f').count()
 
-    all_stickers = Sticker.objects.all().filter(status='v')
+    all_stickers = Sticker.objects.all()
 
     if request.user.is_authenticated:
         if request.user.has_perm('system.delete_bid'):
@@ -88,6 +88,7 @@ class BidListView(generic.ListView):
 
 class BidArchiveView(generic.ListView):
     model = Bid
+    template_name = 'system/bids_list.html'
     paginate_by = 25
     def get_queryset(self):
         return Bid.objects.all().filter(status="f").order_by('-time_creation')
@@ -100,29 +101,12 @@ class BidDetailView(generic.DetailView):
 class MakingBidsByUserListView(LoginRequiredMixin,generic.ListView):
     """Generic class-based view listing books on loan to current user."""
     model = Bid
-    template_name ='system/bids_for_user.html'
+    template_name ='system/bids_list.html'
     paginate_by = 10
-    # login_url = '/login/'
-    #     # redirect_field_name = 'redirect_to'
 
     def get_queryset(self):
         return Bid.objects.all().exclude(status="f").filter(maker=self.request.user).order_by('-time_creation')
         # return Bid.objects.all()
-
-
-# class BidCreate(LoginRequiredMixin, CreateView):
-#     model = Bid
-#     fields = ['text', 'type_bid', 'location', 'telephone_num', 'bider', 'maker', 'helper']
-#
-#     permission_required = 'system.can_mark_returned'
-#
-#
-#
-#
-# class BidUpdate(LoginRequiredMixin, UpdateView):
-#     model = Bid
-#     fields = ['text', 'type_bid', 'location', 'telephone_num', 'bider', 'maker', 'helper', 'comment', 'result', 'status']
-#     permission_required = 'system.can_mark_returned'
 
 
 
@@ -267,8 +251,6 @@ from system.forms import CreateStickerForm
 
 @login_required
 def sticker_create(request):
-    """View function for renewing a specific BookInstance by librarian."""
-    # book_instance = get_object_or_404(BookInstance, pk=pk)
     sticker = Sticker()
 
     # If this is a POST request then process the Form data
@@ -280,9 +262,8 @@ def sticker_create(request):
         # Check if the form is valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
-
+            sticker.name = form.cleaned_data['name']
             sticker.text = form.cleaned_data['text']
-            sticker.status = 'v'
             sticker.date_creation = datetime.datetime.today()
 
             sticker.save()
@@ -301,6 +282,43 @@ def sticker_create(request):
     }
 
     return render(request, 'system/sticker_create.html', context)
+
+
+@login_required
+def sticker_update(request, pk):
+    """View function for renewing a specific BookInstance by librarian."""
+    sticker = get_object_or_404(Sticker, pk=pk)
+
+    # If this is a POST request then process the Form data
+    if request.method == 'POST':
+
+        # Create a form instance and populate it with data from the request (binding):
+        form = CreateStickerForm(request.POST)
+
+        # Check if the form is valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
+            sticker.name = form.cleaned_data['name']
+            sticker.text = form.cleaned_data['text']
+            sticker.save()
+
+            # redirect to a new URL:
+            return HttpResponseRedirect(reverse('index'))
+
+    # If this is a GET (or any other method) create the default form
+    else:
+
+        form = CreateStickerForm(initial={
+            'name': sticker.name,
+            'text': sticker.text
+        })
+
+    context = {
+        'form': form,
+        'sticker': sticker,
+    }
+
+    return render(request, 'system/sticker_update.html', context)
 
 
 class StickerDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):

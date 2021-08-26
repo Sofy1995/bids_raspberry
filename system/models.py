@@ -17,6 +17,7 @@ class Bid(models.Model):
         ('v', 'Вирусы'),
         ('s', 'Софт'),
         ('pa', 'Парус'),
+        ('br', 'Бюрократия'),
     )
 
     type_bid = models.CharField(max_length=2, choices=TYPE_OF_BID, blank=True, default='h', verbose_name="Тип заявки")
@@ -57,14 +58,10 @@ class Bid(models.Model):
 
 
 class Sticker(models.Model):
-    text = models.CharField(max_length=200, verbose_name="Текст объявления")
+    name = models.CharField(max_length=100, verbose_name="Название", null=True)
+    text = models.CharField(max_length=500, verbose_name="Текст объявления")
     date_creation = models.DateTimeField(null=True, verbose_name="Дата создания")
-    STATUS = (
-        ('v', 'visible'),
-        ('h', 'hidden'),
-            )
 
-    status = models.CharField(max_length=1, choices=STATUS, default='v', verbose_name="Статус")
 
     def __str__(self):
         return self.text
@@ -72,5 +69,4 @@ class Sticker(models.Model):
     class Meta:
         verbose_name_plural = "Объявления"
         verbose_name = "Объявление"
-
 

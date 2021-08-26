@@ -15,9 +15,10 @@ var month=new Array("января","февраля","марта","апреля",
 document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
 + " " + d.getFullYear() + " г.");
 </script>
-<div class="bd-content col-sm-6 my-md-4">
+
   <h3>Состояние работ:</h3>
-<div class="row">
+<div class="col-12 col-sm-9 col-md-9 col-lg-5">
+  <div class="table-responsive-xxl">
   <table class="table table-bordered border-info">
   <tr>
     <th>Исполнитель</th>
@@ -55,20 +56,23 @@ document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
     {% endfor %}
     {% endif %}
   </table>
-</div>
+  </div>
 </div>
 
+<p></p>
 {% if all_stickers %}
-<div class="row row-cols-1 row-cols-md-3 g-4">
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-2 ">
 {% for sticker in all_stickers %}
-<div class="col-sm-3">
+<div class="col">
 <div class="card w-100">
 
   <div class="card-body">
-    <h5 class="card-title">Стикер # {{ sticker.id }}</h5>
-    <p class="card-text"><pre style="font-size:15px;font-family:verdana;">{{ sticker }}</pre></p>
+    <h5 class="card-title"># {{ sticker.id }} {% if sticker.name %} {{ sticker.name }} {% endif %}</h5>
+    <p class="card-text">{{ sticker|safe|linebreaks }}</p>
+    <a href="{% url 'sticker-update' sticker.pk %}" class="btn btn-primary btn-sm">Редактировать</a>
     {% if perms.system.delete_sticker %}
-    <a href="{% url 'sticker-delete' sticker.pk %}" class="btn btn-primary">Удалить</a>
+    <a href="{% url 'sticker-delete' sticker.pk %}" class="btn btn-primary btn-sm">Удалить</a>
     {% endif %}
   </div>
 </div>
@@ -78,12 +82,5 @@ document.write(day[d.getDay()]+" " +d.getDate()+ " " + month[d.getMonth()]
 {% else %}
       <p>Объявлений нет.</p>
 {% endif %}
- <!--
-  <table>
-   <tr><th>Number</th><th>Text</th><th>Bider</th><th>Maker</th><th>Date of creation</th></tr>
-   <tr><td>{{ one_bid.id }}</td><td>{{ one_bid.text }}</td><td>{{ one_bid.bider }}</td><td>{{ one_bid.maker }}</td><td>{{ one_bid.time_creation }}</td></tr>
-  </table>
--->
-
-
+<p></p>
 {% endblock %}

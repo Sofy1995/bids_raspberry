@@ -13,13 +13,10 @@
 {% load django_bootstrap_icons %}{% include_bootstrap_icons %}
   <!-- Add additional CSS in static file -->
   {% load static %}
-
-
-
-
 </head>
 <body>
-
+<div class="container-fluid g-1">
+<header>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" >
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'index' %}">Bids</a>
@@ -42,7 +39,7 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'sticker-create' %}">Добавить стикер</a></li>
         {% endif %}
       </ul>
-
+     <div class="d-flex justify-content-between">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" href="{% url 'bid-search' %}">Поиск по номеру заявки</a></li>
         {% if user.is_authenticated %}
@@ -52,14 +49,13 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Войти</a></li>
         {% endif %}
       </ul>
+     </div>
     </div>
   </div>
 </nav>
+</header>
+<div class="container-fluid g-1">
 
-<div class="container-fluid">
-
-<div class="row">
-  <div class="col-sm-10 mx-auto">
   {% block content %}{% endblock %}
 
   {% block pagination %}
@@ -83,9 +79,14 @@
 
   </div>
 
+<footer class="footer bd-footer py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">
+            @Sofy
+            Bids v0.0.3
+        </span>
+    </div>
+</footer>
 </div>
-
-</div>
-
 </body>
 </html>

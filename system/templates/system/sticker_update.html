@@ -2,7 +2,8 @@
 
 {% block content %}
 
-    <div class="col-12 col-sm-9 col-md-9 col-lg-5">
+<div class="col-12 col-sm-9 col-md-9 col-lg-5">
+<h1>Стикер №:{{ sticker.id }}</h1>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.non_field_errors }}
@@ -18,11 +19,14 @@
             {{ form.text }}
             {{ form.text.errors }}
         </div>
-
-
-        <input type="submit" value="Создать" />
+        <input type="submit" value="Сохранить" />
         <input type="reset" value="Очистить" />
     </form>
-    </div>
+    <p></p>
+    {% if perms.system.delete_sticker %}
+
+    <input type="button" value="Удалить" onClick="location.href='{% url "sticker-delete" sticker.pk %}'">
+    {% endif %}
+</div>
 
 {% endblock %}
