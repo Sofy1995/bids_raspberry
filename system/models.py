@@ -70,4 +70,3 @@ class Sticker(models.Model):
         verbose_name_plural = "Объявления"
         verbose_name = "Объявление"
 
-

@@ -4,6 +4,7 @@ db.sqlite3
 system/__pycache__
 system/migrations
 venv/
+old_manage.py
 venv2/
 old_manage.py
 bidsenv/
