@@ -12,7 +12,7 @@ import datetime
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User
-from .filters import BidFilter
+from .filters import BidListFilter, BidArchiveFilter, BidUserFilter
 from django_filters import rest_framework as filters
 
 
@@ -82,12 +82,12 @@ class BidListView(generic.ListView):
     paginate_by = 25
     queryset = Bid.objects.all().exclude(status="f").order_by('-time_creation')
     filter_backends = (filters.DjangoFilterBackend,)
-    filterset_class = BidFilter
+    filterset_class = BidListFilter
     # def get_queryset(self):
     #     return Bid.objects.all().exclude(status="f").order_by('-time_creation')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['filter'] = BidFilter(self.request.GET, queryset=self.get_queryset())
+        context['filter'] = BidListFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
 
@@ -95,15 +95,14 @@ class BidArchiveView(generic.ListView):
     queryset = Bid.objects.all().filter(status="f").order_by('-time_creation')
 
     filter_backends = (filters.DjangoFilterBackend,)
-    filterset_class = BidFilter
+    filterset_class = BidArchiveFilter
     model = Bid
     template_name = 'system/bids_list.html'
     paginate_by = 25
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['filter'] = BidFilter(self.request.GET, queryset=self.get_queryset())
+        context['filter'] = BidArchiveFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
 
@@ -112,14 +111,20 @@ class BidDetailView(generic.DetailView):
 
 
 class MakingBidsByUserListView(LoginRequiredMixin,generic.ListView):
-    """Generic class-based view listing books on loan to current user."""
     model = Bid
-    template_name ='system/bids_list.html'
+    template_name = 'system/bids_list.html'
     paginate_by = 10
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = BidUserFilter
 
     def get_queryset(self):
         return Bid.objects.all().exclude(status="f").filter(maker=self.request.user).order_by('-time_creation')
-        # return Bid.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = BidUserFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+
 
 
 
